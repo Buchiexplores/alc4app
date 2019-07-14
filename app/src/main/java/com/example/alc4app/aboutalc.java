@@ -3,16 +3,20 @@ package com.example.alc4app;
 import android.app.ActionBar;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.http.SslError;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 public class aboutalc extends AppCompatActivity {
 
-    private WebView webView;
+   /* private WebView webView;*/
+
+
 
 
     @Override
@@ -21,19 +25,26 @@ public class aboutalc extends AppCompatActivity {
         setContentView(R.layout.activity_aboutalc);
 
 
-        WebView webView = (WebView) findViewById(R.id.webView);
+        WebView webView = findViewById(R.id.webView);
 
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
+        webView.loadUrl("https://andela.com/alc/");
 
-        webView.loadUrl("hhttps://andela.com/alc/");
+        webView.setWebViewClient(
+                new CustomWebViewClient()
+        );
+
 
         getSupportActionBar().setTitle("About ALC"); // for set actionbar title
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // for add back arrow in
 
     }
 
-    @Override
+
+
+
+@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // TODO Auto-generated method stub
         int id = item.getItemId();
@@ -44,6 +55,9 @@ public class aboutalc extends AppCompatActivity {
 
     }
 
+
+
+
 private class CustomWebViewClient extends WebViewClient {
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -51,17 +65,21 @@ private class CustomWebViewClient extends WebViewClient {
         return true;
     }
 
+    @Override
+    public void onReceivedSslError (WebView view, SslErrorHandler handler, SslError error) {
+        handler.proceed() ;
 
+    }
 
 }
 
-    @Override
+   /* @Override
     protected void onDestroy(){
         super.onDestroy();
 
-        if (webView != null) {
-            webView.destroy();
+        if (wbView != null) {
+            wbView.destroy();
         }
-    }
+    }*/
 
 }
